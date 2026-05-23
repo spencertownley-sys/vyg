@@ -1,0 +1,51 @@
+{
+  "name": "vyg",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "worker": "tsx --tsconfig tsconfig.worker.json worker/index.ts",
+    "seed": "tsx --tsconfig tsconfig.worker.json scripts/seed.ts",
+    "create-admin": "tsx --tsconfig tsconfig.worker.json scripts/create-admin.ts",
+    "ingest": "tsx --tsconfig tsconfig.worker.json scripts/ingest-cli.ts",
+    "ingest:status": "tsx --tsconfig tsconfig.worker.json scripts/ingest-cli.ts --status"
+  },
+  "dependencies": {
+    "@lucia-auth/adapter-sqlite": "^3.0.2",
+    "argon2": "^0.44.0",
+    "better-sqlite3": "^11.10.0",
+    "cheerio": "^1.2.0",
+    "drizzle-orm": "^0.45.2",
+    "js-yaml": "^4.1.1",
+    "lucia": "^3.2.2",
+    "next": "16.2.6",
+    "p-throttle": "^8.1.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "robots-parser": "^3.0.1",
+    "undici": "^8.3.0",
+    "uuid": "^14.0.0",
+    "xml2js": "^0.6.2",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/argon2": "^0.14.1",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
+    "@types/xml2js": "^0.4.14",
+    "drizzle-kit": "^0.31.10",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.6",
+    "tailwindcss": "^4",
+    "tsx": "^4.22.3",
+    "typescript": "^5"
+  }
+}
