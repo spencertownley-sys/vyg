@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LINE_LOGOS } from "@/lib/line-logos";
+import { LineLogo } from "@/components/line-logo";
 
 interface SailingCardProps {
   id: string;
@@ -33,7 +33,6 @@ export function SailingCard({
 }: SailingCardProps) {
   const fare = lowestFare(sampleFares);
   const isOpenJaw = departurePort !== arrivalPort;
-  const logoUrl = LINE_LOGOS[lineId];
 
   return (
     <article
@@ -49,21 +48,7 @@ export function SailingCard({
     >
       {/* Line branding strip */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-          {logoUrl ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={logoUrl}
-              alt={lineName}
-              height={20}
-              style={{ objectFit: "contain", maxWidth: 80, display: "block" }}
-            />
-          ) : (
-            <span style={{ fontSize: 11, fontWeight: 600, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>
-              {lineName}
-            </span>
-          )}
-        </div>
+        <LineLogo lineId={lineId} lineName={lineName} />
         {charterFlag && (
           <span
             style={{
