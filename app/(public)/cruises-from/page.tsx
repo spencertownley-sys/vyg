@@ -2,17 +2,46 @@ import type { Metadata } from "next";
 import { getDeparturePortsWithCounts } from "@/db/queries";
 import { PhotoCard } from "@/components/photo-card";
 import { portPhotoUrl } from "@/lib/travel-photos";
+import { getWikipediaThumbnail } from "@/lib/wiki-photos";
 
 export const metadata: Metadata = {
   title: "Cruises From",
   description: "Browse cruises departing from ports around the world.",
 };
 
-export default function CruisesFromPage() {
+// Wikipedia search topic per port ID — tuned to the exact article that gives
+// the best representative photo of each city / port.
+const PORT_WIKI_TOPICS: Record<string, string> = {
+  "miami-fl":           "Miami",
+  "fort-lauderdale-fl": "Fort Lauderdale",
+  "port-canaveral-fl":  "Port Canaveral",
+  "galveston-tx":       "Galveston, Texas",
+  "new-orleans-la":     "New Orleans",
+  "seattle-wa":         "Seattle",
+  "southampton-uk":     "Southampton",
+  "sydney-australia":   "Sydney",
+  "vancouver-bc":       "Vancouver",
+  "barcelona-spain":    "Barcelona",
+};
+
+export default async function CruisesFromPage() {
   const portsWithCounts = getDeparturePortsWithCounts();
 
+  // Fetch Wikipedia thumbnails in parallel; fall back to curated Unsplash IDs.
+  const portPhotos = await Promise.all(
+    portsWithCounts.map(async ({ port, count }) => {
+      const topic = PORT_WIKI_TOPICS[port.id];
+      const wikiUrl = topic ? await getWikipediaThumbnail(topic) : null;
+      return {
+        port,
+        count,
+        photoUrl: wikiUrl ?? portPhotoUrl(port.id, port.name),
+      };
+    })
+  );
+
   // Group by region
-  const byRegion = portsWithCounts.reduce<Record<string, typeof portsWithCounts>>(
+  const byRegion = portPhotos.reduce<Record<string, typeof portPhotos>>(
     (acc, row) => {
       const region = row.port.region;
       if (!acc[region]) acc[region] = [];
@@ -52,12 +81,12 @@ export default function CruisesFromPage() {
                 gap: 14,
               }}
             >
-              {rows.map(({ port, count }) => (
+              {rows.map(({ port, count, photoUrl }) => (
                 <PhotoCard
                   key={port.id}
                   href={`/cruises-from/${port.id}`}
                   name={port.name}
-                  photoUrl={portPhotoUrl(port.id, port.name)}
+                  photoUrl={photoUrl}
                   count={count}
                 />
               ))}

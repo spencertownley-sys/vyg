@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getDestinationsWithCounts } from "@/db/queries";
 import { PhotoCard } from "@/components/photo-card";
 import { destinationPhotoUrl } from "@/lib/travel-photos";
+import { getWikipediaThumbnail } from "@/lib/wiki-photos";
 
 export const metadata: Metadata = {
   title: "Cruises To",
@@ -12,8 +13,33 @@ function destinationSlug(dest: string) {
   return encodeURIComponent(dest.toLowerCase().replace(/\s+/g, "-"));
 }
 
-export default function CruisesToPage() {
+// Map cruise destination names to the Wikipedia article that best represents them.
+const DEST_WIKI_TOPICS: Record<string, string> = {
+  "Alaska":                  "Alaska",
+  "Australia & New Zealand": "Sydney",
+  "Bahamas":                 "Bahamas",
+  "Caribbean":               "Caribbean",
+  "Eastern Caribbean":       "Caribbean",
+  "Mediterranean":           "Santorini",
+  "Western Caribbean":       "Caribbean Sea",
+  "World":                   "World",
+};
+
+export default async function CruisesToPage() {
   const destinations = getDestinationsWithCounts();
+
+  // Fetch Wikipedia thumbnails in parallel; fall back to curated Unsplash IDs.
+  const destPhotos = await Promise.all(
+    destinations.map(async ({ destination, count }) => {
+      const topic = DEST_WIKI_TOPICS[destination];
+      const wikiUrl = topic ? await getWikipediaThumbnail(topic) : null;
+      return {
+        destination,
+        count,
+        photoUrl: wikiUrl ?? destinationPhotoUrl(destination),
+      };
+    })
+  );
 
   return (
     <div className="container-max" style={{ padding: "40px 16px" }}>
@@ -29,12 +55,12 @@ export default function CruisesToPage() {
           gap: 16,
         }}
       >
-        {destinations.map(({ destination, count }) => (
+        {destPhotos.map(({ destination, count, photoUrl }) => (
           <PhotoCard
             key={destination}
             href={`/cruises-to/${destinationSlug(destination)}`}
             name={destination}
-            photoUrl={destinationPhotoUrl(destination)}
+            photoUrl={photoUrl}
             count={count}
           />
         ))}
