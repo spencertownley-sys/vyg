@@ -12,16 +12,13 @@ export function SiteFooter() {
       <div
         className="container-max"
         style={{
-          height: 56,
+          padding: "12px 0",
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
+          gap: 8,
         }}
       >
-        <span style={{ fontSize: 12, color: "var(--subtle)" }}>
-          VYGR Cruises — independent cruise discovery. Not affiliated with any cruise line.
-        </span>
         <nav aria-label="Footer navigation" style={{ display: "flex", gap: 16 }}>
           <Link
             href="/about"
@@ -36,6 +33,9 @@ export function SiteFooter() {
             Abuse / Legal
           </Link>
         </nav>
+        <span style={{ fontSize: 12, color: "var(--subtle)", textAlign: "center" }}>
+          VYGR Cruises. Independent cruise discovery. Not affiliated with any cruise line.
+        </span>
       </div>
     </footer>
   );
