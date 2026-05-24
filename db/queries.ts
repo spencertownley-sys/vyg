@@ -253,6 +253,31 @@ export function getDestinations() {
     .map((r) => r.destination);
 }
 
+export function getDestinationsWithCounts() {
+  return db
+    .select({
+      destination: sailings.destination,
+      count: sql<number>`count(*)`,
+    })
+    .from(sailings)
+    .groupBy(sailings.destination)
+    .orderBy(sailings.destination)
+    .all();
+}
+
+export function getDeparturePortsWithCounts() {
+  return db
+    .select({
+      port: ports,
+      count: sql<number>`count(*)`,
+    })
+    .from(sailings)
+    .innerJoin(ports, eq(sailings.departurePortId, ports.id))
+    .groupBy(ports.id)
+    .orderBy(ports.name)
+    .all();
+}
+
 export function getRecentIngestionRuns(limit = 50) {
   return db
     .select({ run: ingestionRuns, line: cruiseLines })

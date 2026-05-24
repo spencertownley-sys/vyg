@@ -1,19 +1,30 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { getAllPorts } from "@/db/queries";
+import { getDeparturePortsWithCounts } from "@/db/queries";
+import { PhotoCard } from "@/components/photo-card";
 
 export const metadata: Metadata = {
   title: "Cruises From",
   description: "Browse cruises departing from ports around the world.",
 };
 
+function portPhotoUrl(portName: string, portId: string) {
+  const keyword = encodeURIComponent(portName.split(",")[0].trim() + " port harbor");
+  return `https://source.unsplash.com/600x600/?${keyword}&sig=${encodeURIComponent(portId)}`;
+}
+
 export default function CruisesFromPage() {
-  const ports = getAllPorts();
-  const byRegion = ports.reduce<Record<string, typeof ports>>((acc, p) => {
-    if (!acc[p.region]) acc[p.region] = [];
-    acc[p.region].push(p);
-    return acc;
-  }, {});
+  const portsWithCounts = getDeparturePortsWithCounts();
+
+  // Group by region
+  const byRegion = portsWithCounts.reduce<Record<string, typeof portsWithCounts>>(
+    (acc, row) => {
+      const region = row.port.region;
+      if (!acc[region]) acc[region] = [];
+      acc[region].push(row);
+      return acc;
+    },
+    {}
+  );
 
   return (
     <div className="container-max" style={{ padding: "40px 16px" }}>
@@ -21,34 +32,42 @@ export default function CruisesFromPage() {
       <p style={{ fontSize: 16, color: "var(--muted)", marginBottom: 40 }}>
         Browse sailings by departure port.
       </p>
-      {Object.entries(byRegion).sort(([a], [b]) => a.localeCompare(b)).map(([region, regionPorts]) => (
-        <section key={region} style={{ marginBottom: 40 }}>
-          <h2 style={{ fontSize: 14, fontWeight: 600, color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 16 }}>
-            {region}
-          </h2>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {regionPorts.map((port) => (
-              <Link
-                key={port.id}
-                href={`/cruises-from/${port.id}`}
-                style={{
-                  fontSize: 14,
-                  padding: "10px 16px",
-                  border: "1px solid var(--border)",
-                  borderRadius: 6,
-                  color: "var(--ink)",
-                  textDecoration: "none",
-                  minHeight: 44,
-                  display: "inline-flex",
-                  alignItems: "center",
-                }}
-              >
-                {port.name}
-              </Link>
-            ))}
-          </div>
-        </section>
-      ))}
+
+      {Object.entries(byRegion)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([region, rows]) => (
+          <section key={region} style={{ marginBottom: 48 }}>
+            <h2
+              style={{
+                fontSize: 13,
+                fontWeight: 600,
+                color: "var(--muted)",
+                textTransform: "uppercase",
+                letterSpacing: "0.09em",
+                marginBottom: 18,
+              }}
+            >
+              {region}
+            </h2>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+                gap: 14,
+              }}
+            >
+              {rows.map(({ port, count }) => (
+                <PhotoCard
+                  key={port.id}
+                  href={`/cruises-from/${port.id}`}
+                  name={port.name}
+                  photoUrl={portPhotoUrl(port.name, port.id)}
+                  count={count}
+                />
+              ))}
+            </div>
+          </section>
+        ))}
     </div>
   );
 }
