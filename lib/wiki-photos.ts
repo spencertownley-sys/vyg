@@ -3,10 +3,7 @@
  * Returns the article's main thumbnail URL, or null if unavailable.
  * Results are cached by Next.js for 24 hours.
  */
-export async function getWikipediaThumbnail(
-  topic: string,
-  minWidth = 400,
-): Promise<string | null> {
+export async function getWikipediaThumbnail(topic: string): Promise<string | null> {
   try {
     const res = await fetch(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(topic)}`,
@@ -14,13 +11,15 @@ export async function getWikipediaThumbnail(
     );
     if (!res.ok) return null;
     const data = (await res.json()) as {
-      thumbnail?: { source: string; width: number; height: number };
+      thumbnail?: { source: string };
     };
-    if (!data.thumbnail) return null;
-    // Bump to a larger size by rewriting the width token in the URL
-    const src = data.thumbnail.source;
-    if (data.thumbnail.width < minWidth) return null;
-    return src.replace(/\/\d+(px-[^/]+)$/, `/600$1`);
+    if (!data.thumbnail?.source) return null;
+    // Skip SVG thumbnails (flags, logos, maps)
+    if (data.thumbnail.source.endsWith(".svg.png") || data.thumbnail.source.includes(".svg/")) {
+      return null;
+    }
+    // Upscale to 600px by rewriting the width segment in the Wikimedia thumb URL
+    return data.thumbnail.source.replace(/\/\d+(px-[^/]+)$/, "/600$1");
   } catch {
     return null;
   }

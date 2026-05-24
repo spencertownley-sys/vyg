@@ -13,16 +13,16 @@ function destinationSlug(dest: string) {
   return encodeURIComponent(dest.toLowerCase().replace(/\s+/g, "-"));
 }
 
-// Map cruise destination names to the Wikipedia article that best represents them.
+// Use specific landmark/place articles — broad names return flags or maps.
 const DEST_WIKI_TOPICS: Record<string, string> = {
-  "Alaska":                  "Alaska",
-  "Australia & New Zealand": "Sydney",
-  "Bahamas":                 "Bahamas",
-  "Caribbean":               "Caribbean",
-  "Eastern Caribbean":       "Caribbean",
-  "Mediterranean":           "Santorini",
-  "Western Caribbean":       "Caribbean Sea",
-  "World":                   "World",
+  "Alaska":                  "Kenai Fjords National Park",   // glaciers & water
+  "Australia & New Zealand": "Sydney Opera House",           // iconic landmark
+  "Bahamas":                 "Exuma",                        // turquoise water
+  "Caribbean":               "Exuma",                        // turquoise water
+  "Eastern Caribbean":       "Petit Piton",                  // dramatic Pitons
+  "Mediterranean":           "Santorini",                    // blue domes
+  "Western Caribbean":       "Cozumel",                      // tropical island
+  // "World" intentionally omitted — fallback Unsplash used
 };
 
 export default async function CruisesToPage() {

@@ -11,16 +11,17 @@ export const metadata: Metadata = {
 
 // Wikipedia search topic per port ID — tuned to the exact article that gives
 // the best representative photo of each city / port.
+// Use specific landmark/place articles — country/territory names return flags.
 const PORT_WIKI_TOPICS: Record<string, string> = {
-  "miami-fl":           "Miami",
+  "miami-fl":           "Miami Beach, Florida",  // Ocean Drive Art Deco
   "fort-lauderdale-fl": "Fort Lauderdale",
-  "port-canaveral-fl":  "Port Canaveral",
+  "port-canaveral-fl":  "Cape Canaveral",        // launch pads / coast
   "galveston-tx":       "Galveston, Texas",
   "new-orleans-la":     "New Orleans",
   "seattle-wa":         "Seattle",
   "southampton-uk":     "Southampton",
-  "sydney-australia":   "Sydney",
-  "vancouver-bc":       "Vancouver",
+  "sydney-australia":   "Sydney Opera House",    // iconic landmark
+  "vancouver-bc":       "Stanley Park",          // forest & city
   "barcelona-spain":    "Barcelona",
 };
 
