@@ -97,3 +97,42 @@ export function RefreshAllButton({ enabledLineIds }: RefreshAllButtonProps) {
     </button>
   );
 }
+
+export function RefreshPhotosButton() {
+  const [state, setState] = useState<"idle" | "loading" | "done">("idle");
+
+  async function handleClick() {
+    if (state === "loading") return;
+    setState("loading");
+    try {
+      const res = await fetch("/api/admin/revalidate", { method: "POST" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setState("done");
+      setTimeout(() => setState("idle"), 3000);
+    } catch (err) {
+      alert(`Revalidation failed: ${String(err)}`);
+      setState("idle");
+    }
+  }
+
+  return (
+    <button
+      onClick={handleClick}
+      disabled={state === "loading"}
+      style={{
+        height: 40,
+        padding: "0 16px",
+        fontSize: 13,
+        fontWeight: 500,
+        border: "1px solid var(--border)",
+        borderRadius: 6,
+        backgroundColor: "var(--surface)",
+        color: "var(--ink)",
+        cursor: state === "loading" ? "not-allowed" : "pointer",
+        minHeight: 44,
+      }}
+    >
+      {state === "loading" ? "Refreshing…" : state === "done" ? "✓ Photos refreshed" : "Refresh Photos"}
+    </button>
+  );
+}

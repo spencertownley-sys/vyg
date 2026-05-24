@@ -12,7 +12,7 @@
 import { db, sqlite, initializeSchema } from "../db/client";
 import { ingestionRuns } from "../db/schema";
 import { eq, inArray } from "drizzle-orm";
-import { runIngestion } from "./ingest";
+import { runIngestion, ensureSourcesRegistered } from "./ingest";
 import { CRAWLER_CONTACT_EMAIL, DEFAULT_CONTACT_EMAIL } from "../ingestion/crawler/config";
 import fs from "fs";
 import path from "path";
@@ -35,6 +35,8 @@ function log(message: string): void {
 function startup(): void {
   log("VYG worker starting...");
   initializeSchema();
+  ensureSourcesRegistered();
+  log("All registered cruise line sources ensured in DB.");
 
   if (CRAWLER_CONTACT_EMAIL === DEFAULT_CONTACT_EMAIL) {
     log(

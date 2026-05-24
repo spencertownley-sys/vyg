@@ -8,7 +8,7 @@ import {
 import { SourcesTable } from "@/components/admin/sources-table";
 import { ActiveJobsPanel } from "@/components/admin/active-jobs-panel";
 import { RunsHistory } from "@/components/admin/runs-history";
-import { RefreshAllButton } from "@/components/admin/refresh-button";
+import { RefreshAllButton, RefreshPhotosButton } from "@/components/admin/refresh-button";
 
 export const metadata: Metadata = {
   title: "Sources — Admin",
@@ -49,7 +49,10 @@ export default function AdminPage() {
             {lines.length} cruise lines · {enabledLineIds.length} enabled
           </p>
         </div>
-        <RefreshAllButton enabledLineIds={enabledLineIds} />
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <RefreshPhotosButton />
+          <RefreshAllButton enabledLineIds={enabledLineIds} />
+        </div>
       </div>
 
       {/* Active jobs (client-side polling) */}

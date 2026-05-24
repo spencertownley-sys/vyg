@@ -34,6 +34,82 @@ const SOURCES: Record<string, SailingSource> = {
   celebrity: celebritySource,
 };
 
+/**
+ * Metadata needed to create a cruise_lines row for each registered source.
+ * Only the fields required for the admin panel to function are included.
+ */
+const SOURCE_LINE_META: Record<string, {
+  name: string;
+  websiteUrl: string;
+  bookingUrlTemplate: string;
+}> = {
+  carnival: {
+    name: "Carnival Cruise Line",
+    websiteUrl: "https://www.carnival.com",
+    bookingUrlTemplate: "https://www.carnival.com/cruise/{id}",
+  },
+  princess: {
+    name: "Princess Cruises",
+    websiteUrl: "https://www.princess.com",
+    bookingUrlTemplate: "https://www.princess.com/cruise/detail/{id}",
+  },
+  norwegian: {
+    name: "Norwegian Cruise Line",
+    websiteUrl: "https://www.ncl.com",
+    bookingUrlTemplate: "https://www.ncl.com/cruises/{id}",
+  },
+  msc: {
+    name: "MSC Cruises",
+    websiteUrl: "https://www.msccruisesusa.com",
+    bookingUrlTemplate: "https://www.msccruisesusa.com/cruises/{id}",
+  },
+  "holland-america": {
+    name: "Holland America Line",
+    websiteUrl: "https://www.hollandamerica.com",
+    bookingUrlTemplate: "https://www.hollandamerica.com/en_US/cruise/{id}",
+  },
+  "royal-caribbean": {
+    name: "Royal Caribbean International",
+    websiteUrl: "https://www.royalcaribbean.com",
+    bookingUrlTemplate: "https://www.royalcaribbean.com/cruises/{id}",
+  },
+  viking: {
+    name: "Viking Ocean Cruises",
+    websiteUrl: "https://www.vikingcruises.com",
+    bookingUrlTemplate: "https://www.vikingcruises.com/oceans/cruises/{id}",
+  },
+  "virgin-voyages": {
+    name: "Virgin Voyages",
+    websiteUrl: "https://www.virginvoyages.com",
+    bookingUrlTemplate: "https://www.virginvoyages.com/book/{id}",
+  },
+  disney: {
+    name: "Disney Cruise Line",
+    websiteUrl: "https://www.disneycruise.disney.go.com",
+    bookingUrlTemplate: "https://www.disneycruise.disney.go.com/cruises/{id}",
+  },
+  celebrity: {
+    name: "Celebrity Cruises",
+    websiteUrl: "https://www.celebritycruises.com",
+    bookingUrlTemplate: "https://www.celebritycruises.com/cruise/{id}",
+  },
+};
+
+/**
+ * Ensures every registered source has a corresponding row in cruise_lines.
+ * Safe to call repeatedly — uses INSERT OR IGNORE.
+ * Called at worker startup so new lines are available for ingestion without
+ * requiring a manual DB migration.
+ */
+export function ensureSourcesRegistered(): void {
+  for (const [lineId, meta] of Object.entries(SOURCE_LINE_META)) {
+    sqlite.prepare(`
+      INSERT OR IGNORE INTO cruise_lines (id, name, website_url, booking_url_template, crawler_id, enabled)
+      VALUES (?, ?, ?, ?, ?, 1)
+    `).run(lineId, meta.name, meta.websiteUrl, meta.bookingUrlTemplate, lineId);
+  }
+}
+
 interface Overrides {
   sailings?: Array<{
     id: string;
