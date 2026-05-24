@@ -13,19 +13,38 @@ export const metadata: Metadata = {
 // the best representative photo of each city / port.
 // Use specific landmark/place articles — country/territory names return flags.
 const PORT_WIKI_TOPICS: Record<string, string> = {
+  // USA — Florida
   "miami-fl":           "Miami Beach, Florida",  // Ocean Drive Art Deco
   "fort-lauderdale-fl": "Fort Lauderdale",
   "port-canaveral-fl":  "Cape Canaveral",        // launch pads / coast
+  "tampa-fl":           "Tampa, Florida",
+  "jacksonville-fl":    "Jacksonville, Florida",
+  // USA — Gulf / South
   "galveston-tx":       "Galveston, Texas",
   "new-orleans-la":     "New Orleans",
+  // USA — East Coast
+  "baltimore-md":       "Baltimore Inner Harbor",
+  "new-york-ny":        "Manhattan",             // iconic skyline
+  "charleston-sc":      "Charleston, South Carolina",
+  // USA — Pacific Northwest
   "seattle-wa":         "Seattle",
-  "southampton-uk":     "Southampton",
-  "sydney-australia":   "Sydney Opera House",    // iconic landmark
+  // Canada
   "vancouver-bc":       "Stanley Park",          // forest & city
+  "victoria-bc":        "Victoria, British Columbia",
+  // Europe — Med
   "barcelona-spain":    "Barcelona",
-  "bergen-norway":      "Bryggen",               // iconic UNESCO wharf
+  "rome-civitavecchia": "Rome",                  // Colosseum / city
+  "athens-piraeus":     "Acropolis of Athens",
+  "southampton-uk":     "Southampton",
+  // Australia / NZ
+  "sydney-australia":   "Sydney Opera House",
+  "auckland-nz":        "Auckland",
+  // Northern Europe
+  "bergen-norway":      "Bryggen",               // UNESCO wharf
   "stavanger-norway":   "Stavanger",
-  "reykjavik-iceland":  "Hallgrímskirkja",       // dramatic church / city
+  "reykjavik-iceland":  "Hallgrímskirkja",       // dramatic church / skyline
+  "amsterdam-netherlands": "Amsterdam",
+  "copenhagen-denmark": "Nyhavn",                // colorful canal district
 };
 
 export default async function CruisesFromPage() {

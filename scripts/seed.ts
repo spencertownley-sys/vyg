@@ -80,6 +80,30 @@ const LINE_DATA = [
     enabled: true,
   },
   {
+    id: "virgin-voyages",
+    name: "Virgin Voyages",
+    websiteUrl: "https://www.virginvoyages.com",
+    bookingUrlTemplate: "https://www.virginvoyages.com/book/{id}",
+    crawlerId: "virgin-voyages",
+    enabled: true,
+  },
+  {
+    id: "disney",
+    name: "Disney Cruise Line",
+    websiteUrl: "https://www.disneycruise.disney.go.com",
+    bookingUrlTemplate: "https://www.disneycruise.disney.go.com/cruises/{id}",
+    crawlerId: "disney",
+    enabled: true,
+  },
+  {
+    id: "celebrity",
+    name: "Celebrity Cruises",
+    websiteUrl: "https://www.celebritycruises.com",
+    bookingUrlTemplate: "https://www.celebritycruises.com/cruise/{id}",
+    crawlerId: "celebrity",
+    enabled: true,
+  },
+  {
     id: "royal-caribbean",
     name: "Royal Caribbean International",
     websiteUrl: "https://www.royalcaribbean.com",
@@ -127,6 +151,18 @@ const SHIP_DATA = [
   // Viking
   { id: "viking-venus", lineId: "viking", name: "Viking Venus", shipClass: "Expeditions", yearBuilt: 2021, capacity: 930 },
   { id: "viking-mars", lineId: "viking", name: "Viking Mars", shipClass: "Expeditions", yearBuilt: 2022, capacity: 930 },
+  // Virgin Voyages
+  { id: "scarlet-lady", lineId: "virgin-voyages", name: "Scarlet Lady", shipClass: "Resilient", yearBuilt: 2021, capacity: 2770 },
+  { id: "valiant-lady", lineId: "virgin-voyages", name: "Valiant Lady", shipClass: "Resilient", yearBuilt: 2021, capacity: 2770 },
+  { id: "brilliant-lady", lineId: "virgin-voyages", name: "Brilliant Lady", shipClass: "Resilient", yearBuilt: 2023, capacity: 2770 },
+  // Disney Cruise Line
+  { id: "disney-dream", lineId: "disney", name: "Disney Dream", shipClass: "Dream", yearBuilt: 2011, capacity: 4000 },
+  { id: "disney-fantasy", lineId: "disney", name: "Disney Fantasy", shipClass: "Dream", yearBuilt: 2012, capacity: 4000 },
+  { id: "disney-wish", lineId: "disney", name: "Disney Wish", shipClass: "Triton", yearBuilt: 2022, capacity: 4000 },
+  // Celebrity Cruises
+  { id: "celebrity-beyond", lineId: "celebrity", name: "Celebrity Beyond", shipClass: "Edge", yearBuilt: 2022, capacity: 3260 },
+  { id: "celebrity-ascent", lineId: "celebrity", name: "Celebrity Ascent", shipClass: "Edge", yearBuilt: 2023, capacity: 3260 },
+  { id: "celebrity-edge", lineId: "celebrity", name: "Celebrity Edge", shipClass: "Edge", yearBuilt: 2018, capacity: 2918 },
 ];
 
 // ── Ports ─────────────────────────────────────────────────────────────────────
@@ -483,6 +519,140 @@ addSeries({
   firstDate: "2026-09-24", count: 8, gapDays: 14, nights: 12,
   destination: "Northern Europe", portsOfCall: ["reykjavik-iceland", "flam-norway", "stavanger-norway"],
   fareBase: 3499,
+});
+
+// ── Virgin Voyages Caribbean and Mediterranean ────────────────────────────────
+// Scarlet Lady and Brilliant Lady alternate Eastern/Western from Miami (14-day cycles)
+addSeries({
+  shipId: "scarlet-lady", lineId: "virgin-voyages",
+  bookingTemplate: "https://www.virginvoyages.com/book/{id}",
+  depPortId: "miami-fl", arrPortId: "miami-fl",
+  firstDate: "2026-10-31", count: 9, gapDays: 14, nights: 7,
+  destination: "Western Caribbean", portsOfCall: ["cozumel-mexico", "george-town-cayman", "falmouth-jamaica"],
+  fareBase: 1099,
+});
+
+addSeries({
+  shipId: "brilliant-lady", lineId: "virgin-voyages",
+  bookingTemplate: "https://www.virginvoyages.com/book/{id}",
+  depPortId: "miami-fl", arrPortId: "miami-fl",
+  firstDate: "2026-11-07", count: 9, gapDays: 14, nights: 7,
+  destination: "Eastern Caribbean", portsOfCall: ["san-juan-pr", "st-thomas-usvi", "st-maarten"],
+  fareBase: 1149,
+});
+
+addSeries({
+  shipId: "valiant-lady", lineId: "virgin-voyages",
+  bookingTemplate: "https://www.virginvoyages.com/book/{id}",
+  depPortId: "barcelona-spain", arrPortId: "barcelona-spain",
+  firstDate: "2027-04-10", count: 10, gapDays: 7, nights: 7,
+  destination: "Mediterranean", portsOfCall: ["naples-italy", "rome-civitavecchia", "mykonos-greece", "athens-piraeus"],
+  fareBase: 1599,
+});
+
+// ── Disney Cruise Line Bahamas, Caribbean, and Alaska ─────────────────────────
+addSeries({
+  shipId: "disney-dream", lineId: "disney",
+  bookingTemplate: "https://www.disneycruise.disney.go.com/cruises/{id}",
+  depPortId: "port-canaveral-fl", arrPortId: "port-canaveral-fl",
+  firstDate: "2026-10-03", count: 14, gapDays: 14, nights: 7,
+  destination: "Bahamas", portsOfCall: ["nassau-bahamas", "george-town-cayman"],
+  fareBase: 1499,
+});
+
+addSeries({
+  shipId: "disney-dream", lineId: "disney",
+  bookingTemplate: "https://www.disneycruise.disney.go.com/cruises/{id}",
+  depPortId: "port-canaveral-fl", arrPortId: "port-canaveral-fl",
+  firstDate: "2026-10-10", count: 14, gapDays: 14, nights: 4,
+  destination: "Bahamas", portsOfCall: ["nassau-bahamas"],
+  fareBase: 899,
+});
+
+// Disney Fantasy alternates Eastern/Western Caribbean
+addSeries({
+  shipId: "disney-fantasy", lineId: "disney",
+  bookingTemplate: "https://www.disneycruise.disney.go.com/cruises/{id}",
+  depPortId: "port-canaveral-fl", arrPortId: "port-canaveral-fl",
+  firstDate: "2026-10-10", count: 9, gapDays: 14, nights: 7,
+  destination: "Eastern Caribbean", portsOfCall: ["san-juan-pr", "st-thomas-usvi", "st-maarten"],
+  fareBase: 1699,
+});
+
+addSeries({
+  shipId: "disney-fantasy", lineId: "disney",
+  bookingTemplate: "https://www.disneycruise.disney.go.com/cruises/{id}",
+  depPortId: "port-canaveral-fl", arrPortId: "port-canaveral-fl",
+  firstDate: "2026-10-17", count: 9, gapDays: 14, nights: 7,
+  destination: "Western Caribbean", portsOfCall: ["cozumel-mexico", "george-town-cayman", "falmouth-jamaica"],
+  fareBase: 1649,
+});
+
+addSeries({
+  shipId: "disney-wish", lineId: "disney",
+  bookingTemplate: "https://www.disneycruise.disney.go.com/cruises/{id}",
+  depPortId: "port-canaveral-fl", arrPortId: "port-canaveral-fl",
+  firstDate: "2026-10-01", count: 15, gapDays: 5, nights: 5,
+  destination: "Bahamas", portsOfCall: ["nassau-bahamas"],
+  fareBase: 1199,
+});
+
+// Disney Alaska (summer)
+addSeries({
+  shipId: "disney-fantasy", lineId: "disney",
+  bookingTemplate: "https://www.disneycruise.disney.go.com/cruises/{id}",
+  depPortId: "seattle-wa", arrPortId: "seattle-wa",
+  firstDate: "2027-05-08", count: 10, gapDays: 7, nights: 7,
+  destination: "Alaska", portsOfCall: ["juneau-ak", "skagway-ak", "ketchikan-ak", "victoria-bc"],
+  fareBase: 1799,
+});
+
+// ── Celebrity Cruises Caribbean, Mediterranean, and Alaska ────────────────────
+addSeries({
+  shipId: "celebrity-beyond", lineId: "celebrity",
+  bookingTemplate: "https://www.celebritycruises.com/cruise/{id}",
+  depPortId: "fort-lauderdale-fl", arrPortId: "fort-lauderdale-fl",
+  firstDate: "2026-10-31", count: 14, gapDays: 14, nights: 7,
+  destination: "Eastern Caribbean", portsOfCall: ["san-juan-pr", "st-thomas-usvi", "nassau-bahamas"],
+  fareBase: 1049,
+});
+
+addSeries({
+  shipId: "celebrity-edge", lineId: "celebrity",
+  bookingTemplate: "https://www.celebritycruises.com/cruise/{id}",
+  depPortId: "fort-lauderdale-fl", arrPortId: "fort-lauderdale-fl",
+  firstDate: "2026-11-07", count: 14, gapDays: 14, nights: 7,
+  destination: "Western Caribbean", portsOfCall: ["cozumel-mexico", "george-town-cayman", "falmouth-jamaica"],
+  fareBase: 999,
+});
+
+// Celebrity Beyond alternates East/West on 14-day cycles — offset by 7 days to avoid ID collision
+addSeries({
+  shipId: "celebrity-beyond", lineId: "celebrity",
+  bookingTemplate: "https://www.celebritycruises.com/cruise/{id}",
+  depPortId: "fort-lauderdale-fl", arrPortId: "fort-lauderdale-fl",
+  firstDate: "2026-11-07", count: 10, gapDays: 14, nights: 7,
+  destination: "Western Caribbean", portsOfCall: ["cozumel-mexico", "falmouth-jamaica", "george-town-cayman"],
+  fareBase: 1049,
+});
+
+addSeries({
+  shipId: "celebrity-ascent", lineId: "celebrity",
+  bookingTemplate: "https://www.celebritycruises.com/cruise/{id}",
+  depPortId: "barcelona-spain", arrPortId: "athens-piraeus",
+  firstDate: "2027-04-12", count: 10, gapDays: 12, nights: 10,
+  destination: "Mediterranean", portsOfCall: ["rome-civitavecchia", "naples-italy", "santorini-greece", "mykonos-greece"],
+  fareBase: 1699,
+});
+
+// Celebrity Alaska (summer)
+addSeries({
+  shipId: "celebrity-edge", lineId: "celebrity",
+  bookingTemplate: "https://www.celebritycruises.com/cruise/{id}",
+  depPortId: "seattle-wa", arrPortId: "vancouver-bc",
+  firstDate: "2027-05-09", count: 14, gapDays: 7, nights: 7,
+  destination: "Alaska", portsOfCall: ["juneau-ak", "skagway-ak", "ketchikan-ak"],
+  fareBase: 1299,
 });
 
 // Long voyages

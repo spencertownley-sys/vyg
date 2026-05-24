@@ -45,4 +45,19 @@ export const LINE_META: Record<string, LineMeta> = {
     color: "#004A8F",
     short: "Viking",
   },
+  "virgin-voyages": {
+    logoUrl: "https://upload.wikimedia.org/wikipedia/commons/d/db/Virgin_Voyages_logo.svg",
+    color: "#D62B2B",
+    short: "Virgin Voyages",
+  },
+  "disney": {
+    logoUrl: "https://upload.wikimedia.org/wikipedia/en/6/6f/Disney_Cruise_Line_logo.svg",
+    color: "#003087",
+    short: "Disney Cruise",
+  },
+  "celebrity": {
+    logoUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Celebrity-Cruises-Logo.svg",
+    color: "#2B3A52",
+    short: "Celebrity",
+  },
 };

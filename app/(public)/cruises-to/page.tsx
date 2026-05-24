@@ -18,10 +18,12 @@ const DEST_WIKI_TOPICS: Record<string, string> = {
   "Alaska":                  "Kenai Fjords National Park",   // glaciers & water
   "Australia & New Zealand": "Sydney Opera House",           // iconic landmark
   "Bahamas":                 "Exuma",                        // turquoise water
+  "Bermuda":                 "Horseshoe Bay Beach",          // pink sand beach
   "Caribbean":               "Exuma",                        // turquoise water
   "Eastern Caribbean":       "Petit Piton",                  // dramatic Pitons
   "Mediterranean":           "Santorini",                    // blue domes
   "Northern Europe":         "Norwegian Fjords",             // fjords & scenery
+  "Southern Caribbean":      "Barbados",                     // tropical island
   "Western Caribbean":       "Cozumel",                      // tropical island
   // "World" intentionally omitted — fallback Unsplash used
 };
