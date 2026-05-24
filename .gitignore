@@ -38,7 +38,7 @@ yarn-error.log*
 next-env.d.ts
 
 # VYG — database and crawler artifacts (never commit)
-data/vyg.db
+# data/vyg.db is committed as seed data for Railway deployment
 data/vyg.db-shm
 data/vyg.db-wal
 data/crawler-cache/
