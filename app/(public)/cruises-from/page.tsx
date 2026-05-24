@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 // Use specific landmark/place articles — country/territory names return flags.
 const PORT_WIKI_TOPICS: Record<string, string> = {
   // USA — Florida
-  "miami-fl":           "Miami Beach, Florida",  // Ocean Drive Art Deco
-  "fort-lauderdale-fl": "Fort Lauderdale",
-  "port-canaveral-fl":  "Cape Canaveral",        // launch pads / coast
+  "miami-fl":           "Miami Beach, Florida",     // Ocean Drive Art Deco
+  "fort-lauderdale-fl": "Fort Lauderdale, Florida", // city skyline + waterways
+  "port-canaveral-fl":  "Cape Canaveral",           // launch pads / coast
   "tampa-fl":           "Tampa, Florida",
   "jacksonville-fl":    "Jacksonville, Florida",
   // USA — Gulf / South
@@ -24,27 +24,27 @@ const PORT_WIKI_TOPICS: Record<string, string> = {
   "new-orleans-la":     "New Orleans",
   // USA — East Coast
   "baltimore-md":       "Baltimore Inner Harbor",
-  "new-york-ny":        "Manhattan",             // iconic skyline
+  "new-york-ny":        "Manhattan",                // iconic skyline
   "charleston-sc":      "Charleston, South Carolina",
   // USA — Pacific Northwest
   "seattle-wa":         "Seattle",
   // Canada
-  "vancouver-bc":       "Stanley Park",          // forest & city
+  "vancouver-bc":       "Coal Harbour, Vancouver",  // skyline + seaplane terminal
   "victoria-bc":        "Victoria, British Columbia",
   // Europe — Med
-  "barcelona-spain":    "Barcelona",
-  "rome-civitavecchia": "Rome",                  // Colosseum / city
-  "athens-piraeus":     "Acropolis of Athens",
+  "barcelona-spain":    "Park Güell",               // iconic Gaudí mosaic terrace
+  "rome-civitavecchia": "Trevi Fountain",           // iconic Rome landmark
+  "athens-piraeus":     "Erechtheion",              // real Acropolis temple photo
   "southampton-uk":     "Southampton",
   // Australia / NZ
-  "sydney-australia":   "Sydney Opera House",
-  "auckland-nz":        "Auckland",
+  "sydney-australia":   "Sydney Harbour Bridge",    // iconic arch bridge + opera house
+  "auckland-nz":        "Auckland",                 // city skyline
   // Northern Europe
-  "bergen-norway":      "Bryggen",               // UNESCO wharf
+  "bergen-norway":      "Bryggen",                  // UNESCO wharf
   "stavanger-norway":   "Stavanger",
-  "reykjavik-iceland":  "Hallgrímskirkja",       // dramatic church / skyline
+  "reykjavik-iceland":  "Hallgrímskirkja",          // dramatic church / skyline
   "amsterdam-netherlands": "Amsterdam",
-  "copenhagen-denmark": "Nyhavn",                // colorful canal district
+  "copenhagen-denmark": "Nyhavn",                   // colorful canal district
 };
 
 export default async function CruisesFromPage() {

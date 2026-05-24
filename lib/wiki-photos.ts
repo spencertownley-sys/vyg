@@ -1,13 +1,13 @@
 /**
  * Fetch a photo from Wikipedia's public summary API.
  * Returns the article's main thumbnail URL, or null if unavailable.
- * Results are cached by Next.js for 24 hours.
+ * Results are cached by Next.js for 1 hour.
  */
 export async function getWikipediaThumbnail(topic: string): Promise<string | null> {
   try {
     const res = await fetch(
       `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(topic)}`,
-      { next: { revalidate: 86400 } }
+      { next: { revalidate: 3600 } }
     );
     if (!res.ok) return null;
     const data = (await res.json()) as {

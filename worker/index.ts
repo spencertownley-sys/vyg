@@ -10,9 +10,10 @@
  */
 
 import { db, sqlite, initializeSchema } from "../db/client";
-import { ingestionRuns } from "../db/schema";
+import { ingestionRuns, cruiseLines } from "../db/schema";
 import { eq, inArray } from "drizzle-orm";
 import { runIngestion, ensureSourcesRegistered } from "./ingest";
+import { enqueueJob } from "../db/jobs";
 import { CRAWLER_CONTACT_EMAIL, DEFAULT_CONTACT_EMAIL } from "../ingestion/crawler/config";
 import fs from "fs";
 import path from "path";
@@ -32,11 +33,36 @@ function log(message: string): void {
   }
 }
 
+function autoQueueNewLines(): void {
+  // For every enabled cruise line that has never had an ingestion run,
+  // queue one automatically so ships/ports/sailings populate on first deploy.
+  const enabled = db
+    .select({ id: cruiseLines.id })
+    .from(cruiseLines)
+    .where(eq(cruiseLines.enabled, true))
+    .all();
+
+  for (const { id: lineId } of enabled) {
+    const hasRun = db
+      .select({ id: ingestionRuns.id })
+      .from(ingestionRuns)
+      .where(eq(ingestionRuns.lineId, lineId))
+      .limit(1)
+      .get();
+
+    if (!hasRun) {
+      const jobId = enqueueJob(lineId, "scheduled");
+      log(`Auto-queued first ingestion for new line "${lineId}" (job ${jobId})`);
+    }
+  }
+}
+
 function startup(): void {
   log("VYG worker starting...");
   initializeSchema();
   ensureSourcesRegistered();
   log("All registered cruise line sources ensured in DB.");
+  autoQueueNewLines();
 
   if (CRAWLER_CONTACT_EMAIL === DEFAULT_CONTACT_EMAIL) {
     log(

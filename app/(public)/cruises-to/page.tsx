@@ -16,14 +16,14 @@ function destinationSlug(dest: string) {
 // Use specific landmark/place articles — broad names return flags or maps.
 const DEST_WIKI_TOPICS: Record<string, string> = {
   "Alaska":                  "Kenai Fjords National Park",   // glaciers & water
-  "Australia & New Zealand": "Sydney Opera House",           // iconic landmark
-  "Bahamas":                 "Exuma",                        // turquoise water
-  "Bermuda":                 "Horseshoe Bay Beach",          // pink sand beach
-  "Caribbean":               "Exuma",                        // turquoise water
+  "Australia & New Zealand": "Sydney Harbour Bridge",        // iconic arch bridge
+  "Bahamas":                 "Exuma Cays Land and Sea Park",  // turquoise Bahamian water
+  "Bermuda":                 "Horseshoe Bay Beach",           // pink sand beach
+  "Caribbean":               "Exuma Cays Land and Sea Park",  // turquoise water
   "Eastern Caribbean":       "Petit Piton",                  // dramatic Pitons
-  "Mediterranean":           "Santorini",                    // blue domes
-  "Northern Europe":         "Norwegian Fjords",             // fjords & scenery
-  "Southern Caribbean":      "Barbados",                     // tropical island
+  "Mediterranean":           "Imerovigli",                   // Santorini caldera view
+  "Northern Europe":         "Geirangerfjord",               // UNESCO fjord scenery
+  "Southern Caribbean":      "Crane Beach, Barbados",        // tropical beach
   "Western Caribbean":       "Cozumel",                      // tropical island
   // "World" intentionally omitted — fallback Unsplash used
 };
