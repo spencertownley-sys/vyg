@@ -12,8 +12,8 @@ interface PhotoCardProps {
 
 export function PhotoCard({ href, name, photoUrl, count }: PhotoCardProps) {
   const [hovered, setHovered] = useState(false);
-  // On error, fall back to a picsum photo seeded by name
-  const fallback = `https://picsum.photos/seed/${encodeURIComponent(name)}/600/600`;
+  // On error, fall back to a generic travel photo (not random picsum)
+  const fallback = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=600&fit=crop&auto=format&q=80";
   const [src, setSrc] = useState(photoUrl);
 
   return (
