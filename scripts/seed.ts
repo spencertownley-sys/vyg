@@ -53,7 +53,7 @@ const LINE_DATA = [
     websiteUrl: "https://www.hollandamerica.com",
     bookingUrlTemplate: "https://www.hollandamerica.com/en_US/cruise/{id}",
     crawlerId: "holland-america",
-    enabled: false,
+    enabled: true,
   },
   {
     id: "msc",
@@ -61,7 +61,7 @@ const LINE_DATA = [
     websiteUrl: "https://www.msccruisesusa.com",
     bookingUrlTemplate: "https://www.msccruisesusa.com/cruises/{id}",
     crawlerId: "msc",
-    enabled: false,
+    enabled: true,
   },
   {
     id: "norwegian",
@@ -69,7 +69,7 @@ const LINE_DATA = [
     websiteUrl: "https://www.ncl.com",
     bookingUrlTemplate: "https://www.ncl.com/cruises/{id}",
     crawlerId: "norwegian",
-    enabled: false,
+    enabled: true,
   },
   {
     id: "princess",
@@ -77,7 +77,7 @@ const LINE_DATA = [
     websiteUrl: "https://www.princess.com",
     bookingUrlTemplate: "https://www.princess.com/cruise/detail/{id}",
     crawlerId: "princess",
-    enabled: false,
+    enabled: true,
   },
 ];
 
