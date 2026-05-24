@@ -68,6 +68,7 @@ function SearchContent({ params }: { params: Record<string, string> }) {
               <SailingCard
                 key={sailing.id}
                 id={sailing.id}
+                lineId={line.id}
                 shipName={ship.name}
                 lineName={line.name}
                 departurePort={departurePort.name}

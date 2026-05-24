@@ -122,6 +122,7 @@ export default function HomePage() {
               <SailingCard
                 key={sailing.id}
                 id={sailing.id}
+                lineId={line.id}
                 shipName={ship.name}
                 lineName={line.name}
                 departurePort={departurePort.name}

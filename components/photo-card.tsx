@@ -12,7 +12,9 @@ interface PhotoCardProps {
 
 export function PhotoCard({ href, name, photoUrl, count }: PhotoCardProps) {
   const [hovered, setHovered] = useState(false);
-  const [imgError, setImgError] = useState(false);
+  // On error, fall back to a picsum photo seeded by name
+  const fallback = `https://picsum.photos/seed/${encodeURIComponent(name)}/600/600`;
+  const [src, setSrc] = useState(photoUrl);
 
   return (
     <Link
@@ -31,25 +33,23 @@ export function PhotoCard({ href, name, photoUrl, count }: PhotoCardProps) {
       }}
     >
       {/* Photo */}
-      {!imgError && (
-        <img
-          src={photoUrl}
-          alt={name}
-          onError={() => setImgError(true)}
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            transform: hovered ? "scale(1.08)" : "scale(1)",
-            transition: "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-            willChange: "transform",
-          }}
-        />
-      )}
+      <img
+        src={src}
+        alt={name}
+        onError={() => { if (src !== fallback) setSrc(fallback); }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          transform: hovered ? "scale(1.08)" : "scale(1)",
+          transition: "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+          willChange: "transform",
+        }}
+      />
 
-      {/* Gradient overlay — darkens more on hover */}
+      {/* Gradient overlay — darkens on hover */}
       <div
         style={{
           position: "absolute",
@@ -91,13 +91,13 @@ export function PhotoCard({ href, name, photoUrl, count }: PhotoCardProps) {
           <div
             style={{
               fontSize: 12,
-              color: "rgba(255,255,255,0.72)",
+              color: "rgba(255,255,255,0.75)",
               marginTop: 3,
               opacity: hovered ? 1 : 0.8,
               transition: "opacity 0.35s ease",
             }}
           >
-            {count} sailing{count !== 1 ? "s" : ""}
+            {count.toLocaleString()} sailing{count !== 1 ? "s" : ""}
           </div>
         )}
       </div>

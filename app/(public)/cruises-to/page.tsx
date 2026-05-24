@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
 import { getDestinationsWithCounts } from "@/db/queries";
 import { PhotoCard } from "@/components/photo-card";
+import { destinationPhotoUrl } from "@/lib/travel-photos";
 
 export const metadata: Metadata = {
   title: "Cruises To",
   description: "Browse cruises by destination — Caribbean, Mediterranean, Alaska, and more.",
 };
-
-function destinationPhotoUrl(destination: string) {
-  const keyword = encodeURIComponent(destination + " cruise destination");
-  return `https://source.unsplash.com/600x600/?${keyword}&sig=${encodeURIComponent(destination)}`;
-}
 
 function destinationSlug(dest: string) {
   return encodeURIComponent(dest.toLowerCase().replace(/\s+/g, "-"));

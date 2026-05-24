@@ -1,16 +1,12 @@
 import type { Metadata } from "next";
 import { getDeparturePortsWithCounts } from "@/db/queries";
 import { PhotoCard } from "@/components/photo-card";
+import { portPhotoUrl } from "@/lib/travel-photos";
 
 export const metadata: Metadata = {
   title: "Cruises From",
   description: "Browse cruises departing from ports around the world.",
 };
-
-function portPhotoUrl(portName: string, portId: string) {
-  const keyword = encodeURIComponent(portName.split(",")[0].trim() + " port harbor");
-  return `https://source.unsplash.com/600x600/?${keyword}&sig=${encodeURIComponent(portId)}`;
-}
 
 export default function CruisesFromPage() {
   const portsWithCounts = getDeparturePortsWithCounts();
@@ -61,7 +57,7 @@ export default function CruisesFromPage() {
                   key={port.id}
                   href={`/cruises-from/${port.id}`}
                   name={port.name}
-                  photoUrl={portPhotoUrl(port.name, port.id)}
+                  photoUrl={portPhotoUrl(port.id, port.name)}
                   count={count}
                 />
               ))}

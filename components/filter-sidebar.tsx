@@ -8,11 +8,14 @@ interface FilterOption {
   label: string;
 }
 
+type HideSection = "lines" | "destination" | "departurePort" | "duration" | "month" | "ship" | "charter";
+
 interface FilterSidebarProps {
   destinations: FilterOption[];
   ports: FilterOption[];
   ships: FilterOption[];
   lines: FilterOption[];
+  hide?: HideSection[];
 }
 
 // ── Duration buckets ────────────────────────────────────────────────────────
@@ -90,7 +93,7 @@ function Checkbox({ checked }: { checked: boolean }) {
 }
 
 // ── FilterSidebar ───────────────────────────────────────────────────────────
-export function FilterSidebar({ destinations, ports, ships, lines }: FilterSidebarProps) {
+export function FilterSidebar({ destinations, ports, ships, lines, hide = [] }: FilterSidebarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -128,9 +131,13 @@ export function FilterSidebar({ destinations, ports, ships, lines }: FilterSideb
     [router, searchParams, pathname]
   );
 
-  const anyActive = ["month","destination","departurePort","durationBucket","ship","charter","lines"].some(
-    (k) => searchParams.has(k)
-  );
+  const SECTION_KEYS: [string, HideSection][] = [
+    ["month", "month"], ["destination", "destination"], ["departurePort", "departurePort"],
+    ["durationBucket", "duration"], ["ship", "ship"], ["charter", "charter"], ["lines", "lines"],
+  ];
+  const anyActive = SECTION_KEYS
+    .filter(([, section]) => !hide.includes(section))
+    .some(([key]) => searchParams.has(key));
 
   return (
     <aside
@@ -159,7 +166,7 @@ export function FilterSidebar({ destinations, ports, ships, lines }: FilterSideb
       </div>
 
       {/* ── Cruise Line ── */}
-      <section>
+      {!hide.includes("lines") && <section>
         <div style={sectionLabel}>Cruise Line</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
           {lines.map((line) => {
@@ -193,10 +200,10 @@ export function FilterSidebar({ destinations, ports, ships, lines }: FilterSideb
             );
           })}
         </div>
-      </section>
+      </section>}
 
       {/* ── Destination ── */}
-      <section>
+      {!hide.includes("destination") && <section>
         <div style={sectionLabel}>Destination</div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
           {destinations.map((dest) => {
@@ -213,10 +220,10 @@ export function FilterSidebar({ destinations, ports, ships, lines }: FilterSideb
             );
           })}
         </div>
-      </section>
+      </section>}
 
       {/* ── Duration ── */}
-      <section>
+      {!hide.includes("duration") && <section>
         <div style={sectionLabel}>Duration</div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
           {DURATION_OPTIONS.map((opt) => {
@@ -233,10 +240,10 @@ export function FilterSidebar({ destinations, ports, ships, lines }: FilterSideb
             );
           })}
         </div>
-      </section>
+      </section>}
 
       {/* ── Departure Port ── */}
-      <section>
+      {!hide.includes("departurePort") && <section>
         <div style={sectionLabel}>Departure Port</div>
         <select
           value={get("departurePort")}
@@ -249,10 +256,10 @@ export function FilterSidebar({ destinations, ports, ships, lines }: FilterSideb
             <option key={p.value} value={p.value}>{p.label}</option>
           ))}
         </select>
-      </section>
+      </section>}
 
       {/* ── Sail Month ── */}
-      <section>
+      {!hide.includes("month") && <section>
         <div style={sectionLabel}>Sail Month</div>
         <select
           value={get("month")}
@@ -265,10 +272,10 @@ export function FilterSidebar({ destinations, ports, ships, lines }: FilterSideb
             <option key={m.value} value={m.value}>{m.label}</option>
           ))}
         </select>
-      </section>
+      </section>}
 
       {/* ── Ship ── */}
-      <section>
+      {!hide.includes("ship") && <section>
         <div style={sectionLabel}>Ship</div>
         <select
           value={get("ship")}
@@ -281,10 +288,10 @@ export function FilterSidebar({ destinations, ports, ships, lines }: FilterSideb
             <option key={s.value} value={s.value}>{s.label}</option>
           ))}
         </select>
-      </section>
+      </section>}
 
       {/* ── Charters ── */}
-      <section>
+      {!hide.includes("charter") && <section>
         <div style={sectionLabel}>Type</div>
         <button
           onClick={() => setParam("charter", get("charter") === "true" ? "" : "true")}
@@ -305,7 +312,7 @@ export function FilterSidebar({ destinations, ports, ships, lines }: FilterSideb
           <Checkbox checked={get("charter") === "true"} />
           Charters only
         </button>
-      </section>
+      </section>}
     </aside>
   );
 }
