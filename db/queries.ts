@@ -1,6 +1,6 @@
 import { db, sqlite } from "./client";
 import { sailings, ships, ports, cruiseLines, ingestionRuns, itineraryStops } from "./schema";
-import { eq, desc, and, gte, lte, like, sql, inArray } from "drizzle-orm";
+import { eq, asc, desc, and, gte, lte, like, sql, inArray } from "drizzle-orm";
 
 export type SailingRow = typeof sailings.$inferSelect;
 export type ShipRow = typeof ships.$inferSelect;
@@ -15,6 +15,8 @@ export interface SailingWithRelations extends SailingRow {
   stops: Array<typeof itineraryStops.$inferSelect & { port: PortRow | null }>;
 }
 
+export type SortBy = "date-asc" | "date-desc" | "price-asc" | "price-desc" | "nights-asc" | "nights-desc";
+
 export interface SearchFilters {
   month?: string;
   destination?: string;
@@ -25,7 +27,9 @@ export interface SearchFilters {
   ship?: string;
   durationBucket?: "short" | "medium" | "long" | "extended";
   charter?: boolean;
-  lineId?: string;
+  lineId?: string;   // kept for single-line pages (lines/[line])
+  lineIds?: string[]; // multi-select from search page
+  sortBy?: SortBy;
 }
 
 function durationRange(bucket: string): [number, number] {
@@ -82,7 +86,9 @@ export function searchSailings(filters: SearchFilters, limit = 50, offset = 0) {
   if (filters.charter !== undefined) {
     conditions.push(eq(sailings.charterFlag, filters.charter));
   }
-  if (filters.lineId) {
+  if (filters.lineIds && filters.lineIds.length > 0) {
+    conditions.push(inArray(cruiseLines.id, filters.lineIds));
+  } else if (filters.lineId) {
     conditions.push(eq(cruiseLines.id, filters.lineId));
   }
 
@@ -90,7 +96,15 @@ export function searchSailings(filters: SearchFilters, limit = 50, offset = 0) {
     query = query.where(and(...conditions)) as typeof query;
   }
 
-  return query.orderBy(sailings.departDate).limit(limit).offset(offset).all();
+  const priceExpr = sql`CAST(json_extract(${sailings.sampleFares}, '$.Interior') AS REAL)`;
+  switch (filters.sortBy ?? "date-asc") {
+    case "date-desc":  return query.orderBy(desc(sailings.departDate)).limit(limit).offset(offset).all();
+    case "price-asc":  return query.orderBy(asc(priceExpr)).limit(limit).offset(offset).all();
+    case "price-desc": return query.orderBy(desc(priceExpr)).limit(limit).offset(offset).all();
+    case "nights-asc": return query.orderBy(asc(sailings.nights)).limit(limit).offset(offset).all();
+    case "nights-desc":return query.orderBy(desc(sailings.nights)).limit(limit).offset(offset).all();
+    default:           return query.orderBy(asc(sailings.departDate)).limit(limit).offset(offset).all();
+  }
 }
 
 export function getSailingById(id: string): SailingWithRelations | null {
