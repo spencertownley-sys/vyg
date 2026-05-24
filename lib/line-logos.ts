@@ -11,12 +11,12 @@ export interface LineMeta {
 
 export const LINE_META: Record<string, LineMeta> = {
   "carnival": {
-    logoUrl: null,
+    logoUrl: "https://upload.wikimedia.org/wikipedia/en/c/ca/Carnival_Cruise_Line_Logo.svg",
     color: "#003087",
     short: "Carnival",
   },
   "holland-america": {
-    logoUrl: null,
+    logoUrl: "https://upload.wikimedia.org/wikipedia/en/4/4f/Holland_America_Line_logo.svg",
     color: "#00205B",
     short: "Holland America",
   },
@@ -31,8 +31,18 @@ export const LINE_META: Record<string, LineMeta> = {
     short: "Norwegian",
   },
   "princess": {
-    logoUrl: null,
+    logoUrl: "https://upload.wikimedia.org/wikipedia/en/1/14/Princess_Cruises_logo.svg",
     color: "#1B3C8F",
     short: "Princess",
+  },
+  "royal-caribbean": {
+    logoUrl: "https://upload.wikimedia.org/wikipedia/commons/1/15/Royal_Caribbean_logo_%282024%29.svg",
+    color: "#0057B8",
+    short: "Royal Caribbean",
+  },
+  "viking": {
+    logoUrl: "https://upload.wikimedia.org/wikipedia/en/7/7f/Viking_Cruises_transparent_logo.svg",
+    color: "#004A8F",
+    short: "Viking",
   },
 };

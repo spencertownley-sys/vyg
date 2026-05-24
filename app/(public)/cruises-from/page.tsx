@@ -23,6 +23,9 @@ const PORT_WIKI_TOPICS: Record<string, string> = {
   "sydney-australia":   "Sydney Opera House",    // iconic landmark
   "vancouver-bc":       "Stanley Park",          // forest & city
   "barcelona-spain":    "Barcelona",
+  "bergen-norway":      "Bryggen",               // iconic UNESCO wharf
+  "stavanger-norway":   "Stavanger",
+  "reykjavik-iceland":  "Hallgrímskirkja",       // dramatic church / city
 };
 
 export default async function CruisesFromPage() {

@@ -79,6 +79,22 @@ const LINE_DATA = [
     crawlerId: "princess",
     enabled: true,
   },
+  {
+    id: "royal-caribbean",
+    name: "Royal Caribbean International",
+    websiteUrl: "https://www.royalcaribbean.com",
+    bookingUrlTemplate: "https://www.royalcaribbean.com/cruises/{id}",
+    crawlerId: "royal-caribbean",
+    enabled: true,
+  },
+  {
+    id: "viking",
+    name: "Viking Ocean Cruises",
+    websiteUrl: "https://www.vikingcruises.com",
+    bookingUrlTemplate: "https://www.vikingcruises.com/oceans/cruises/{id}",
+    crawlerId: "viking",
+    enabled: true,
+  },
 ];
 
 // ── Ships ─────────────────────────────────────────────────────────────────────
@@ -104,6 +120,13 @@ const SHIP_DATA = [
   { id: "sun-princess", lineId: "princess", name: "Sun Princess", shipClass: "Sphere", yearBuilt: 2024, capacity: 4300 },
   { id: "sky-princess", lineId: "princess", name: "Sky Princess", shipClass: "Royal", yearBuilt: 2019, capacity: 3660 },
   { id: "royal-princess", lineId: "princess", name: "Royal Princess", shipClass: "Royal", yearBuilt: 2013, capacity: 3560 },
+  // Royal Caribbean
+  { id: "icon-of-the-seas", lineId: "royal-caribbean", name: "Icon of the Seas", shipClass: "Icon", yearBuilt: 2024, capacity: 7600 },
+  { id: "wonder-of-the-seas", lineId: "royal-caribbean", name: "Wonder of the Seas", shipClass: "Oasis", yearBuilt: 2022, capacity: 6988 },
+  { id: "harmony-of-the-seas", lineId: "royal-caribbean", name: "Harmony of the Seas", shipClass: "Oasis", yearBuilt: 2016, capacity: 5479 },
+  // Viking
+  { id: "viking-venus", lineId: "viking", name: "Viking Venus", shipClass: "Expeditions", yearBuilt: 2021, capacity: 930 },
+  { id: "viking-mars", lineId: "viking", name: "Viking Mars", shipClass: "Expeditions", yearBuilt: 2022, capacity: 930 },
 ];
 
 // ── Ports ─────────────────────────────────────────────────────────────────────
@@ -153,6 +176,11 @@ const PORT_DATA = [
   { id: "hong-kong", name: "Hong Kong", city: "Hong Kong", country: "China", region: "Asia", lat: 22.3193, lng: 114.1694 },
   { id: "tokyo-yokohama", name: "Tokyo (Yokohama), Japan", city: "Yokohama", country: "Japan", region: "Asia", lat: 35.4437, lng: 139.6380 },
   { id: "dubai-uae", name: "Dubai, UAE", city: "Dubai", country: "UAE", region: "Middle East", lat: 25.2048, lng: 55.2708 },
+  // Northern Europe (Viking)
+  { id: "bergen-norway", name: "Bergen, Norway", city: "Bergen", country: "Norway", region: "Northern Europe", lat: 60.3913, lng: 5.3221 },
+  { id: "stavanger-norway", name: "Stavanger, Norway", city: "Stavanger", country: "Norway", region: "Northern Europe", lat: 58.9700, lng: 5.7331 },
+  { id: "flam-norway", name: "Flåm, Norway", city: "Flåm", country: "Norway", region: "Northern Europe", lat: 60.8633, lng: 7.1171 },
+  { id: "reykjavik-iceland", name: "Reykjavík, Iceland", city: "Reykjavík", country: "Iceland", region: "Northern Europe", lat: 64.1355, lng: -21.8954 },
 ];
 
 // ── Sailing generation helpers ────────────────────────────────────────────────
@@ -361,6 +389,100 @@ addSeries({
   firstDate: "2027-04-27", count: 10, gapDays: 14, nights: 14,
   destination: "Mediterranean", portsOfCall: ["barcelona-spain", "rome-civitavecchia", "naples-italy", "athens-piraeus", "dubrovnik-croatia"],
   fareBase: 1499,
+});
+
+// ── Royal Caribbean Caribbean ─────────────────────────────────────────────────
+// Icon alternates Eastern/Western Caribbean weekly on 14-day cycles (staggered start)
+addSeries({
+  shipId: "icon-of-the-seas", lineId: "royal-caribbean",
+  bookingTemplate: "https://www.royalcaribbean.com/cruises/{id}",
+  depPortId: "miami-fl", arrPortId: "miami-fl",
+  firstDate: "2026-11-07", count: 9, gapDays: 14, nights: 7,
+  destination: "Eastern Caribbean", portsOfCall: ["nassau-bahamas", "st-thomas-usvi", "st-maarten"],
+  fareBase: 1199,
+});
+
+addSeries({
+  shipId: "icon-of-the-seas", lineId: "royal-caribbean",
+  bookingTemplate: "https://www.royalcaribbean.com/cruises/{id}",
+  depPortId: "miami-fl", arrPortId: "miami-fl",
+  firstDate: "2026-10-31", count: 9, gapDays: 14, nights: 7,
+  destination: "Western Caribbean", portsOfCall: ["cozumel-mexico", "falmouth-jamaica", "george-town-cayman"],
+  fareBase: 1149,
+});
+
+addSeries({
+  shipId: "wonder-of-the-seas", lineId: "royal-caribbean",
+  bookingTemplate: "https://www.royalcaribbean.com/cruises/{id}",
+  depPortId: "port-canaveral-fl", arrPortId: "port-canaveral-fl",
+  firstDate: "2026-10-04", count: 20, gapDays: 7, nights: 7,
+  destination: "Bahamas", portsOfCall: ["nassau-bahamas", "cozumel-mexico"],
+  fareBase: 999,
+});
+
+addSeries({
+  shipId: "wonder-of-the-seas", lineId: "royal-caribbean",
+  bookingTemplate: "https://www.royalcaribbean.com/cruises/{id}",
+  depPortId: "port-canaveral-fl", arrPortId: "port-canaveral-fl",
+  firstDate: "2026-10-01", count: 8, gapDays: 4, nights: 4,
+  destination: "Bahamas", portsOfCall: ["nassau-bahamas"],
+  fareBase: 649,
+});
+
+addSeries({
+  shipId: "harmony-of-the-seas", lineId: "royal-caribbean",
+  bookingTemplate: "https://www.royalcaribbean.com/cruises/{id}",
+  depPortId: "galveston-tx", arrPortId: "galveston-tx",
+  firstDate: "2026-10-11", count: 16, gapDays: 7, nights: 7,
+  destination: "Western Caribbean", portsOfCall: ["cozumel-mexico", "george-town-cayman", "falmouth-jamaica"],
+  fareBase: 1049,
+});
+
+// Royal Caribbean Mediterranean (summer)
+addSeries({
+  shipId: "harmony-of-the-seas", lineId: "royal-caribbean",
+  bookingTemplate: "https://www.royalcaribbean.com/cruises/{id}",
+  depPortId: "barcelona-spain", arrPortId: "rome-civitavecchia",
+  firstDate: "2027-05-01", count: 10, gapDays: 7, nights: 7,
+  destination: "Mediterranean", portsOfCall: ["naples-italy", "santorini-greece", "mykonos-greece", "athens-piraeus"],
+  fareBase: 1399,
+});
+
+// ── Viking Ocean Mediterranean and Northern Europe ─────────────────────────────
+addSeries({
+  shipId: "viking-venus", lineId: "viking",
+  bookingTemplate: "https://www.vikingcruises.com/oceans/cruises/{id}",
+  depPortId: "barcelona-spain", arrPortId: "athens-piraeus",
+  firstDate: "2027-04-05", count: 10, gapDays: 12, nights: 10,
+  destination: "Mediterranean", portsOfCall: ["rome-civitavecchia", "naples-italy", "valletta-malta", "dubrovnik-croatia"],
+  fareBase: 2999,
+});
+
+addSeries({
+  shipId: "viking-venus", lineId: "viking",
+  bookingTemplate: "https://www.vikingcruises.com/oceans/cruises/{id}",
+  depPortId: "athens-piraeus", arrPortId: "barcelona-spain",
+  firstDate: "2027-04-15", count: 10, gapDays: 12, nights: 10,
+  destination: "Mediterranean", portsOfCall: ["dubrovnik-croatia", "valletta-malta", "naples-italy", "rome-civitavecchia"],
+  fareBase: 2999,
+});
+
+addSeries({
+  shipId: "viking-mars", lineId: "viking",
+  bookingTemplate: "https://www.vikingcruises.com/oceans/cruises/{id}",
+  depPortId: "bergen-norway", arrPortId: "southampton-uk",
+  firstDate: "2026-09-12", count: 8, gapDays: 14, nights: 12,
+  destination: "Northern Europe", portsOfCall: ["stavanger-norway", "flam-norway", "reykjavik-iceland"],
+  fareBase: 3499,
+});
+
+addSeries({
+  shipId: "viking-mars", lineId: "viking",
+  bookingTemplate: "https://www.vikingcruises.com/oceans/cruises/{id}",
+  depPortId: "southampton-uk", arrPortId: "bergen-norway",
+  firstDate: "2026-09-24", count: 8, gapDays: 14, nights: 12,
+  destination: "Northern Europe", portsOfCall: ["reykjavik-iceland", "flam-norway", "stavanger-norway"],
+  fareBase: 3499,
 });
 
 // Long voyages

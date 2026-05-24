@@ -9,6 +9,8 @@ import { princessSource } from "../ingestion/sources/princess";
 import { norwegianSource } from "../ingestion/sources/norwegian";
 import { mscSource } from "../ingestion/sources/msc";
 import { hollandAmericaSource } from "../ingestion/sources/holland-america";
+import { royalCaribbeanSource } from "../ingestion/sources/royal-caribbean";
+import { vikingSource } from "../ingestion/sources/viking";
 import { normalizeRawSailing } from "../ingestion/normalize";
 import { canonicalSailingSchema } from "../ingestion/schemas";
 import type { SailingSource, ProgressReporter } from "../ingestion/sources/types";
@@ -22,6 +24,8 @@ const SOURCES: Record<string, SailingSource> = {
   norwegian: norwegianSource,
   msc: mscSource,
   "holland-america": hollandAmericaSource,
+  "royal-caribbean": royalCaribbeanSource,
+  viking: vikingSource,
 };
 
 interface Overrides {

@@ -26,6 +26,8 @@ const DESTINATION_PHOTOS: Record<string, string> = {
     unsplash("1570077188670-e3a8d69ac5ff"), // Santorini blue domes
   "Western Caribbean":
     unsplash("1512813195386-6cf811ad3542"), // tropical coast / Mexico
+  "Northern Europe":
+    unsplash("1513622470522-26c3c8a854bc"), // Norwegian fjords / nature
   "World":
     unsplash("1534655378-51ee269f1d17"),    // globe / map travel
 };
@@ -53,6 +55,12 @@ const PORT_PHOTOS: Record<string, string> = {
     unsplash("1559521783-1d1599583165"),    // Vancouver skyline / mountains
   "barcelona-spain":
     unsplash("1583422409516-2895a77efded"), // Barcelona / Sagrada Família
+  "bergen-norway":
+    unsplash("1508193638397-1c4234db14d8"), // Bergen Bryggen wharf
+  "stavanger-norway":
+    unsplash("1513622470522-26c3c8a854bc"), // Norway fjords
+  "reykjavik-iceland":
+    unsplash("1529963183134-61a90db47eaf"), // Reykjavík / Iceland
 };
 
 export function destinationPhotoUrl(destination: string): string {

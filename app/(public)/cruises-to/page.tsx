@@ -21,6 +21,7 @@ const DEST_WIKI_TOPICS: Record<string, string> = {
   "Caribbean":               "Exuma",                        // turquoise water
   "Eastern Caribbean":       "Petit Piton",                  // dramatic Pitons
   "Mediterranean":           "Santorini",                    // blue domes
+  "Northern Europe":         "Norwegian Fjords",             // fjords & scenery
   "Western Caribbean":       "Cozumel",                      // tropical island
   // "World" intentionally omitted — fallback Unsplash used
 };
