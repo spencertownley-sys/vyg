@@ -32,10 +32,6 @@ export function SiteFooter() {
           </Link>
           <span style={{ fontSize: 12, color: "var(--subtle)" }}>|</span>
           <Link href="/abuse" style={{ fontSize: 12, color: "var(--subtle)", textDecoration: "none" }}>
-            Abuse
-          </Link>
-          <span style={{ fontSize: 12, color: "var(--subtle)" }}>|</span>
-          <Link href="/abuse" style={{ fontSize: 12, color: "var(--subtle)", textDecoration: "none" }}>
             Legal
           </Link>
         </nav>
