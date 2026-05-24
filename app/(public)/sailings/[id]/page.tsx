@@ -157,10 +157,10 @@ export default async function SailingDetailPage({ params }: Props) {
                   minHeight: 44,
                 }}
               >
-                Book on {sailing.ship.line.name} ↗
+                Book on cruise line ↗
               </a>
               <p style={{ fontSize: 12, color: "var(--subtle)", marginTop: 12, textAlign: "center" }}>
-                You will leave vyg and book directly with the cruise line.
+                You will leave VYGR Cruises and book directly with the cruise line.
               </p>
             </div>
           </div>

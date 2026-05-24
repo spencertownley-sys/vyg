@@ -20,7 +20,7 @@ export function SiteFooter() {
         }}
       >
         <span style={{ fontSize: 12, color: "var(--subtle)" }}>
-          vyg — independent cruise discovery. Not affiliated with any cruise line.
+          VYGR Cruises — independent cruise discovery. Not affiliated with any cruise line.
         </span>
         <nav aria-label="Footer navigation" style={{ display: "flex", gap: 16 }}>
           <Link

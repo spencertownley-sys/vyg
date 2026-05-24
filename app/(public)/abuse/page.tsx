@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Abuse / Legal",
-  description: "Report abuse or legal concerns about vyg.",
+  description: "Report abuse or legal concerns about VYGR Cruises.",
 };
 
 export default function AbusePage() {
@@ -13,14 +13,14 @@ export default function AbusePage() {
         <section>
           <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>Data removal requests</h2>
           <p style={{ color: "var(--muted)" }}>
-            If you represent a cruise line and would like information removed from vyg, contact us at the address below. We take removal requests seriously and will respond promptly.
+            If you represent a cruise line and would like information removed from VYGR Cruises, contact us at the address below. We take removal requests seriously and will respond promptly.
           </p>
         </section>
 
         <section>
           <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>Crawler policy</h2>
           <p style={{ color: "var(--muted)" }}>
-            vyg indexes publicly available cruise schedule information from cruise line websites. Our crawler respects robots.txt, rate-limits itself to 1 request per 2 seconds per domain, and identifies itself with a User-Agent string that includes a contact address.
+            VYGR Cruises indexes publicly available cruise schedule information from cruise line websites. Our crawler respects robots.txt, rate-limits itself to 1 request per 2 seconds per domain, and identifies itself with a User-Agent string that includes a contact address.
           </p>
           <p style={{ color: "var(--muted)", marginTop: 8 }}>
             We do not access paywalled content, login-protected pages, or any data that is not publicly accessible without authentication.
@@ -34,10 +34,10 @@ export default function AbusePage() {
           </p>
           <p style={{ marginTop: 8 }}>
             <a
-              href="mailto:abuse@vyg.example"
+              href="mailto:abuse@VYGR Cruises.example"
               style={{ color: "var(--ink)", textDecoration: "underline" }}
             >
-              abuse@vyg.example
+              abuse@VYGR Cruises.example
             </a>
           </p>
         </section>
@@ -45,7 +45,7 @@ export default function AbusePage() {
         <section>
           <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>Disclaimer</h2>
           <p style={{ color: "var(--muted)" }}>
-            All pricing shown on vyg is sample data for reference purposes only. Actual prices vary by date, cabin type, and occupancy. Always confirm pricing directly with the cruise line. vyg makes no warranty regarding the accuracy or completeness of any information displayed.
+            All pricing shown on VYGR Cruises is sample data for reference purposes only. Actual prices vary by date, cabin type, and occupancy. Always confirm pricing directly with the cruise line. VYGR Cruises makes no warranty regarding the accuracy or completeness of any information displayed.
           </p>
         </section>
       </div>

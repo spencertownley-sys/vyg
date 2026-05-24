@@ -6,7 +6,7 @@ import { SailingCard } from "@/components/sailing-card";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "vyg — cruise discovery",
+  title: "VYGR Cruises — cruise discovery",
   description: "Find cruises from every major cruise line. Search by destination, port, ship, or date.",
 };
 
@@ -42,7 +42,7 @@ export default function HomePage() {
             Find your next cruise.
           </h1>
           <p style={{ fontSize: 16, color: "var(--muted)", marginBottom: 32 }}>
-            {lines.length} cruise lines · independent, unaffiliated listings
+            Search all cruise lines — independent, unaffiliated listings
           </p>
           <Suspense>
             <SearchBarWrapper />

@@ -18,8 +18,8 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s — vyg",
-    default: "vyg — cruise discovery",
+    template: "%s — VYGR Cruises",
+    default: "VYGR Cruises — cruise discovery",
   },
   description: "Find cruises from every major cruise line. Browse by destination, port, ship, or sailing date.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"),
